@@ -1,0 +1,16 @@
+name: Snapcraft Action
+author: Samuel Meuli
+description: GitHub Action for setting up Snapcraft
+
+inputs:
+  snapcraft_token:
+    description: Token for logging into Snapcraft
+    required: true
+
+runs:
+  using: node12
+  main: ./index.js
+
+branding:
+  icon: upload-cloud
+  color: green
