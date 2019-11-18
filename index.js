@@ -46,10 +46,6 @@ const runMacInstaller = () => {
  * Installs Snapcraft and logs the user in
  */
 const runAction = () => {
-	if (!process.env.INPUT_SNAPCRAFT_TOKEN) {
-		throw Error('Missing "snapcraft_token" input variable');
-	}
-
 	const platform = getPlatform();
 
 	// Install Snapcraft
@@ -59,14 +55,18 @@ const runAction = () => {
 	} else if (platform === "mac") {
 		runMacInstaller();
 	} else {
-		log("Snapcraft is not yet available for Windows. Skipping.");
+		log("Snapcraft is not yet available for Windows. Skipping");
 		process.exit(0);
 	}
 
 	// Log in
-	log("Logging in to Snapcraft…");
-	writeFileSync(LOGIN_FILE_PATH, process.env.INPUT_SNAPCRAFT_TOKEN);
-	run(`snapcraft login --with ${LOGIN_FILE_PATH}`);
+	if (process.env.INPUT_SNAPCRAFT_TOKEN) {
+		log("Logging in to Snapcraft…");
+		writeFileSync(LOGIN_FILE_PATH, process.env.INPUT_SNAPCRAFT_TOKEN);
+		run(`snapcraft login --with ${LOGIN_FILE_PATH}`);
+	} else {
+		log(`No "snapcraft_token" input variable provided. Skipping login`);
+	}
 };
 
 runAction();
