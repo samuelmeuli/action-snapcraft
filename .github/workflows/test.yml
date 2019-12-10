@@ -1,0 +1,46 @@
+name: Test
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  # Install without login
+  install:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-10.14, ubuntu-18.04, windows-2019]
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+      - name: Snapcraft should not be installed
+        shell: bash
+        run: "! snapcraft --version"
+      - name: Run action
+        uses: ./
+      - name: Snapcraft should be installed on macOS/Ubuntu
+        if: startsWith(matrix.os, 'macos') || startsWith(matrix.os, 'ubuntu')
+        run: snapcraft --version
+      - name: Snapcraft should not be installed on Windows
+        if: startsWith(matrix.os, 'windows')
+        shell: bash
+        run: "! snapcraft --version"
+
+  # Install with login
+  login:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-10.14, ubuntu-18.04]
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+      - name: User should not be logged in
+        run: "! snapcraft whoami"
+      - name: Run action
+        uses: ./
+        with:
+          snapcraft_token: ${{ secrets.snapcraft_token }}
+      - name: User should be logged in
+        run: snapcraft whoami
