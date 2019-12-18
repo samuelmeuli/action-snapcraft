@@ -2,6 +2,14 @@
 
 **GitHub Action for setting up Snapcraft**
 
+## Overview
+
+This action…
+
+- Installs Snapcraft on macOS/Ubuntu
+- Optionally logs you in to the Snap Store
+- Allows you to run Snapcraft commands in your GitHub Actions workflows
+
 ## Usage
 
 ### Basic
@@ -60,3 +68,8 @@ Finally, add the following option to your workflow step:
 ## Development
 
 Suggestions and contributions are always welcome! Please discuss larger changes via issue before submitting a pull request.
+
+## Related
+
+- [Electron Builder Action](https://github.com/samuelmeuli/action-electron-builder) – GitHub Action for building and releasing Electron apps
+- [Maven Publish Action](https://github.com/samuelmeuli/action-maven-publish) – GitHub Action for automatically publishing Maven packages
