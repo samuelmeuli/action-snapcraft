@@ -31,6 +31,10 @@ const getPlatform = () => {
  * Installs Snapcraft on Linux
  */
 const runLinuxInstaller = () => {
+	if (process.env.INPUT_SKIP_INSTALL) {
+		log("Skipping install");
+		return;
+	}
 	run("sudo snap install snapcraft --classic");
 	run("sudo chown root:root /"); // Fix root ownership
 };
@@ -39,6 +43,10 @@ const runLinuxInstaller = () => {
  * Installs Snapcraft on macOS
  */
 const runMacInstaller = () => {
+	if (process.env.INPUT_SKIP_INSTALL) {
+		log("Skipping install");
+		return;
+	}
 	run("brew install snapcraft");
 };
 
