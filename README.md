@@ -34,7 +34,7 @@ jobs:
 
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Install Snapcraft
         uses: samuelmeuli/action-snapcraft@v1
@@ -65,6 +65,22 @@ Finally, add the following option to your workflow step:
     snapcraft_token: ${{ secrets.snapcraft_token }}
     skip_install: true # optional, if already installed in an earlier step
 ```
+
+### Build using LXD
+
+LXD (`runs-on: ubuntu-latest`) is for now likely the easiest way to get `snapcraft` to build snaps.
+This is an alternative to using `multipass` (GitHub VMs give the error `launch failed: CPU does not support KVM extensions.` when trying to use `multipass`).
+It takes between 1 to ~10 minutes to set up `lxd` (varies wildly between runs).
+
+```yml
+- name: Install Snapcraft with LXD
+  uses: samuelmeuli/action-snapcraft@v1
+  with:
+    use_lxd: true
+- name: Build snap
+  run: snapcraft --use-lxd
+```
+
 
 ## Development
 
