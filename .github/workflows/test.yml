@@ -45,3 +45,23 @@ jobs:
           snapcraft_token: ${{ secrets.snapcraft_token }}
       - name: User should be logged in
         run: snapcraft whoami
+
+  # Install with lxd
+  lxd:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+      - name: Run action
+        uses: ./
+      - name: lxd should not be available
+        run: "! /snap/bin/lxd waitready"
+      - name: Run action requesting lxd
+        uses: ./
+        with:
+          use_lxd: true
+      - name: lxd should be installed
+        run: "/snap/bin/lxd waitready"
