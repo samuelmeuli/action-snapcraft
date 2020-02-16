@@ -64,6 +64,7 @@ const runAction = () => {
 		log("Logging in to Snapcraft…");
 		writeFileSync(LOGIN_FILE_PATH, process.env.INPUT_SNAPCRAFT_TOKEN);
 		run(`snapcraft login --with ${LOGIN_FILE_PATH}`);
+		run(`rm ${LOGIN_FILE_PATH}`);
 	} else {
 		log(`No "snapcraft_token" input variable provided. Skipping login`);
 	}
