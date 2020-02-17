@@ -31,10 +31,6 @@ const getPlatform = () => {
  * Installs Snapcraft on Linux
  */
 const runLinuxInstaller = () => {
-	if (process.env.INPUT_SKIP_INSTALL) {
-		log("Skipping install");
-		return;
-	}
 	run("sudo snap install snapcraft --classic");
 	run("sudo chown root:root /"); // Fix root ownership
 };
@@ -43,10 +39,6 @@ const runLinuxInstaller = () => {
  * Installs Snapcraft on macOS
  */
 const runMacInstaller = () => {
-	if (process.env.INPUT_SKIP_INSTALL) {
-		log("Skipping install");
-		return;
-	}
 	run("brew install snapcraft");
 };
 
@@ -58,13 +50,18 @@ const runAction = () => {
 
 	// Install Snapcraft
 	log(`Installing Snapcraft for ${platform.charAt(0).toUpperCase() + platform.slice(1)}…`);
-	if (platform === "linux") {
+	if (platform === "windows") {
+		log("Snapcraft is not yet available for Windows. Skipping");
+		process.exit(0);
+	} else if (process.env.INPUT_SKIP_INSTALL) {
+		log("Skipping install");
+	} else if (platform === "linux") {
 		runLinuxInstaller();
 	} else if (platform === "mac") {
 		runMacInstaller();
 	} else {
-		log("Snapcraft is not yet available for Windows. Skipping");
-		process.exit(0);
+		log("Unknown platform");
+		process.exit(1);
 	}
 
 	// Log in

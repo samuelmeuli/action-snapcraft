@@ -63,7 +63,7 @@ Finally, add the following option to your workflow step:
   uses: samuelmeuli/action-snapcraft@v1
   with:
     snapcraft_token: ${{ secrets.snapcraft_token }}
-    skip_install: true  # optional, if already installed in an earlier step
+    skip_install: true # optional, if already installed in an earlier step
 ```
 
 ## Development
