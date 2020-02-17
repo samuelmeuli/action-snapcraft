@@ -64,4 +64,4 @@ jobs:
         with:
           use_lxd: true
       - name: lxd should be installed
-        run: "/snap/bin/lxd waitready"
+        run: "/snap/bin/lxd version"
