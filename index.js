@@ -31,7 +31,7 @@ const getPlatform = () => {
  * Installs Snapcraft on Linux
  */
 const runLinuxInstaller = () => {
-	const lxd = process.env.INPUT_USE_LXD;
+	const lxd = process.env.INPUT_USE_LXD === "true";
 	run("sudo snap install snapcraft --classic");
 	if (lxd) {
 		run("sudo snap install lxd");
