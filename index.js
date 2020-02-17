@@ -53,7 +53,7 @@ const runAction = () => {
 	if (platform === "windows") {
 		log("Snapcraft is not yet available for Windows. Skipping");
 		process.exit(0);
-	} else if (process.env.INPUT_SKIP_INSTALL) {
+	} else if (process.env.INPUT_SKIP_INSTALL === "true") {
 		log("Skipping install");
 	} else if (platform === "linux") {
 		runLinuxInstaller();
