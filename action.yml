@@ -9,6 +9,9 @@ inputs:
   skip_install:
     description: Skip installation (login only)
     required: false
+  use_lxd:
+    description: Whether to install and configure lxd
+    required: false
 
 runs:
   using: node12

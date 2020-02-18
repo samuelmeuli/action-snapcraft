@@ -31,8 +31,17 @@ const getPlatform = () => {
  * Installs Snapcraft on Linux
  */
 const runLinuxInstaller = () => {
+	const lxd = process.env.INPUT_USE_LXD === "true";
 	run("sudo snap install snapcraft --classic");
+	if (lxd) {
+		run("sudo snap install lxd");
+	}
 	run("sudo chown root:root /"); // Fix root ownership
+	if (lxd) {
+		run("sudo /snap/bin/lxd.migrate -yes");
+		run("sudo /snap/bin/lxd waitready");
+		run("sudo /snap/bin/lxd init --auto");
+	}
 };
 
 /**
