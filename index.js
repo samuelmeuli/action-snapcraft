@@ -50,13 +50,18 @@ const runAction = () => {
 
 	// Install Snapcraft
 	log(`Installing Snapcraft for ${platform.charAt(0).toUpperCase() + platform.slice(1)}…`);
-	if (platform === "linux") {
+	if (platform === "windows") {
+		log("Snapcraft is not yet available for Windows. Skipping");
+		process.exit(0);
+	} else if (process.env.INPUT_SKIP_INSTALL === "true") {
+		log("Skipping install");
+	} else if (platform === "linux") {
 		runLinuxInstaller();
 	} else if (platform === "mac") {
 		runMacInstaller();
 	} else {
-		log("Snapcraft is not yet available for Windows. Skipping");
-		process.exit(0);
+		log("Unknown platform");
+		process.exit(1);
 	}
 
 	// Log in

@@ -6,6 +6,9 @@ inputs:
   snapcraft_token:
     description: Token for logging into Snapcraft
     required: true
+  skip_install:
+    description: Skip installation (login only)
+    required: false
 
 runs:
   using: node12
