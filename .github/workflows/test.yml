@@ -29,7 +29,7 @@ jobs:
 
   # Install with login
   login:
-    if: github.repository == 'samuelmeuli/action-snapcraft'
+    if: github.event == 'push' && github.repository == 'samuelmeuli/action-snapcraft'
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
