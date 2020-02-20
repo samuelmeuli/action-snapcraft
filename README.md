@@ -72,7 +72,7 @@ LXD (`runs-on: ubuntu-latest`) is for now likely the easiest way to get `snapcra
 
 ```yml
 - name: Install Snapcraft with LXD
-  uses: samuelmeuli/action-snapcraft@v1
+  uses: samuelmeuli/action-snapcraft@v1.1.0
   with:
     use_lxd: true
 - name: Build snap
