@@ -79,6 +79,17 @@ LXD (`runs-on: ubuntu-latest`) is for now likely the easiest way to get `snapcra
   run: snapcraft --use-lxd
 ```
 
+### Debug
+
+To see more outputs, including the commands outputs, use `verbose` input:
+
+```yml
+- name: Install Snapcraft
+  uses: samuelmeuli/action-snapcraft@v1
+  with:
+    verbose: true
+```
+
 ## Development
 
 Suggestions and contributions are always welcome! Please discuss larger changes via issue before submitting a pull request.
