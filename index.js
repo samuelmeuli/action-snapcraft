@@ -6,7 +6,7 @@ const LOGIN_FILE_PATH = "./snap-token.txt";
 /**
  * Logs to the console
  */
-const log = msg => console.log(`\n${msg}`); // eslint-disable-line no-console
+const log = (msg) => console.log(`\n${msg}`); // eslint-disable-line no-console
 
 /**
  * Executes the provided shell command and redirects stdout/stderr to the console
