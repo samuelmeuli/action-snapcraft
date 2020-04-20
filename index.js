@@ -11,7 +11,8 @@ const log = msg => console.log(`\n${msg}`); // eslint-disable-line no-console
 /**
  * Executes the provided shell command and redirects stdout/stderr to the console
  */
-const run = cmd => execSync(cmd, { encoding: "utf8", stdio: "inherit" });
+const run = (cmd, printStdio = true) =>
+	execSync(cmd, { encoding: "utf8", stdio: printStdio ? "inherit" : "pipe" });
 
 /**
  * Determines the current operating system (one of ["mac", "windows", "linux"])
@@ -36,6 +37,7 @@ const runLinuxInstaller = () => {
 	if (useLxd) {
 		run("sudo snap install lxd");
 	}
+	run(`echo "::add-path::/snap/bin"`); // Add `/snap/bin` to PATH for subsequent actions
 	run("sudo chown root:root /"); // Fix root ownership
 	if (useLxd) {
 		run("sudo /snap/bin/lxd.migrate -yes");
@@ -74,11 +76,15 @@ const runAction = () => {
 		process.exit(1);
 	}
 
+	const snapcraftPath =
+		platform === "linux" ? "/snap/bin/snapcraft" : run("which snapcraft", false).trim();
+	log(`Snapcraft is installed at ${snapcraftPath}`);
+
 	// Log in
 	if (process.env.INPUT_SNAPCRAFT_TOKEN) {
 		log("Logging in to Snapcraft…");
 		writeFileSync(LOGIN_FILE_PATH, process.env.INPUT_SNAPCRAFT_TOKEN);
-		run(`snapcraft login --with ${LOGIN_FILE_PATH}`);
+		run(`${snapcraftPath} login --with ${LOGIN_FILE_PATH}`);
 		unlinkSync(LOGIN_FILE_PATH);
 	} else {
 		log(`No "snapcraft_token" input variable provided. Skipping login`);
