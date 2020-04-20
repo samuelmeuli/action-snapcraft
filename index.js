@@ -7,11 +7,15 @@ const LOGIN_FILE_PATH = "./snap-token.txt";
  * Logs to the console
  */
 const log = msg => console.log(`\n${msg}`); // eslint-disable-line no-console
+const verbose = process.env.INPUT_VERBOSE ? log : () => { };
 
 /**
  * Executes the provided shell command and redirects stdout/stderr to the console
  */
-const run = cmd => execSync(cmd, { encoding: "utf8", stdio: "inherit" });
+const run = cmd => {
+	verbose(`$ ${cmd}`);
+	verbose(execSync(cmd, { encoding: "utf8", stdio: "inherit" }));
+}
 
 /**
  * Determines the current operating system (one of ["mac", "windows", "linux"])
