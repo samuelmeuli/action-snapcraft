@@ -31,13 +31,13 @@ const getPlatform = () => {
  * Installs Snapcraft on Linux
  */
 const runLinuxInstaller = () => {
-	const lxd = process.env.INPUT_USE_LXD === "true";
+	const useLxd = process.env.INPUT_USE_LXD === "true";
 	run("sudo snap install snapcraft --classic");
-	if (lxd) {
+	if (useLxd) {
 		run("sudo snap install lxd");
 	}
 	run("sudo chown root:root /"); // Fix root ownership
-	if (lxd) {
+	if (useLxd) {
 		run("sudo /snap/bin/lxd.migrate -yes");
 		run("sudo /snap/bin/lxd waitready");
 		run("sudo /snap/bin/lxd init --auto");
@@ -58,15 +58,16 @@ const runAction = () => {
 	const platform = getPlatform();
 
 	// Install Snapcraft
-	log(`Installing Snapcraft for ${platform.charAt(0).toUpperCase() + platform.slice(1)}…`);
 	if (platform === "windows") {
 		log("Snapcraft is not yet available for Windows. Skipping");
 		process.exit(0);
 	} else if (process.env.INPUT_SKIP_INSTALL === "true") {
 		log("Skipping install");
 	} else if (platform === "linux") {
+		log("Installing Snapcraft for Linux…");
 		runLinuxInstaller();
 	} else if (platform === "mac") {
+		log("Installing Snapcraft for macOS…");
 		runMacInstaller();
 	} else {
 		log("Unknown platform");
