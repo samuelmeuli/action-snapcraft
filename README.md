@@ -76,7 +76,7 @@ LXD (`runs-on: ubuntu-latest`) is for now likely the easiest way to get `snapcra
   with:
     use_lxd: true
 - name: Build snap
-  run: snapcraft --use-lxd
+  run: sudo snapcraft --use-lxd # sudo is required for --use-lxd
 ```
 
 ## Development
