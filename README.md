@@ -18,7 +18,7 @@ To use this action, add the following step to your workflow:
 
 ```yml
 - name: Install Snapcraft
-  uses: samuelmeuli/action-snapcraft@v1
+  uses: samuelmeuli/action-snapcraft@v1.1.2
 ```
 
 A full example:
@@ -37,7 +37,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install Snapcraft
-        uses: samuelmeuli/action-snapcraft@v1
+        uses: samuelmeuli/action-snapcraft@v1.1.2
 
       # You can now run Snapcraft shell commands
       - name: Use Snapcraft
@@ -60,7 +60,7 @@ Finally, add the following option to your workflow step:
 
 ```yml
 - name: Install Snapcraft
-  uses: samuelmeuli/action-snapcraft@v1
+  uses: samuelmeuli/action-snapcraft@v1.1.2
   with:
     snapcraft_token: ${{ secrets.snapcraft_token }}
     skip_install: true # optional, if already installed in an earlier step
@@ -72,7 +72,7 @@ LXD (`runs-on: ubuntu-latest`) is for now likely the easiest way to get `snapcra
 
 ```yml
 - name: Install Snapcraft with LXD
-  uses: samuelmeuli/action-snapcraft@v1
+  uses: samuelmeuli/action-snapcraft@v1.1.2
   with:
     use_lxd: true
 - name: Build snap
