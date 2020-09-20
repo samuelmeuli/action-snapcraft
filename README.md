@@ -6,7 +6,7 @@
 
 This action…
 
-- Installs Snapcraft on macOS/Ubuntu
+- Installs Snapcraft on macOS / Ubuntu 18.04+
 - Optionally logs you in to the Snap Store
 - Allows you to run Snapcraft commands in your GitHub Actions workflows
 
