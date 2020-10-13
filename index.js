@@ -38,7 +38,7 @@ const runLinuxInstaller = () => {
 		run("sudo snap install lxd");
 		run(`sudo usermod --append --groups lxd ${process.env.USER}`);
 	}
-	run(`echo "::add-path::/snap/bin"`); // Add `/snap/bin` to PATH for subsequent actions
+	run(`echo /snap/bin >> ${process.env.GITHUB_PATH}`); // Add `/snap/bin` to PATH for subsequent actions
 	run("sudo chown root:root /"); // Fix root ownership
 	if (useLxd) {
 		run("sudo /snap/bin/lxd.migrate -yes");
