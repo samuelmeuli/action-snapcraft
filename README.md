@@ -54,6 +54,8 @@ You will also need a Snap Store login token. To obtain one, run the following co
 snapcraft export-login --snaps SNAP_NAME --channels edge -
 ```
 
+NOTE: You will need to manually push a package to the Snap Store to get a valid SNAP_NAME first.
+
 Copy that token and add it as a secret to GitHub Actions. You can do this in your GitHub repository under Settings → Secrets. The secret must be called `snapcraft_token`.
 
 Finally, add the following option to your workflow step:
