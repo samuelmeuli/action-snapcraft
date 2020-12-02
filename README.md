@@ -10,6 +10,11 @@ This action…
 - Optionally logs you in to the Snap Store
 - Allows you to run Snapcraft commands in your GitHub Actions workflows
 
+Note that the more recently created [snapcore/action-build] and [snapcore/action-publish] effectively copy the `use_lxd` strategy (below).
+
+[snapcore/action-build]: https://github.com/snapcore/action-build
+[snapcore/action-publish]: https://github.com/snapcore/action-publish
+
 ## Usage
 
 ### Basic
@@ -85,8 +90,12 @@ LXD (`runs-on: ubuntu-latest`) is for now likely the easiest way to get `snapcra
 
 Suggestions and contributions are always welcome! Please discuss larger changes via issue before submitting a pull request.
 
+Currently maintained by [@casperdcl](https://github.com/casperdcl).
+
 ## Related
 
 - [Lint Action](https://github.com/samuelmeuli/lint-action) – GitHub Action for detecting and fixing linting errors
 - [Electron Builder Action](https://github.com/samuelmeuli/action-electron-builder) – GitHub Action for building and releasing Electron apps
 - [Maven Publish Action](https://github.com/samuelmeuli/action-maven-publish) – GitHub Action for automatically publishing Maven packages
+- [snapcore/action-build] – GitHub Action for installing LXD and Snapcraft, and building snaps
+- [snapcore/action-publish] – GitHub Action for logging in and pushing to the Snap Store
