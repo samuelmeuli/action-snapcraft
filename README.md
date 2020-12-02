@@ -10,7 +10,7 @@ This action…
 - Optionally logs you in to the Snap Store
 - Allows you to run Snapcraft commands in your GitHub Actions workflows
 
-Note that the more recently created [snapcore/action-build] and [snapcore/action-publish] effectively copy the `use_lxd` strategy (below).
+Note that the more recently created [snapcore/action-build] and [snapcore/action-publish] effectively copy the `use_lxd` strategy (below). Building using this actions still takes ~3:30 min less time than [snapcore/action-build].
 
 [snapcore/action-build]: https://github.com/snapcore/action-build
 [snapcore/action-publish]: https://github.com/snapcore/action-publish
