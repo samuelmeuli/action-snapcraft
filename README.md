@@ -35,7 +35,7 @@ on: push
 
 jobs:
   my-job:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
 
     steps:
       - name: Check out Git repository
@@ -75,7 +75,7 @@ Finally, add the following option to your workflow step:
 
 ### Build using LXD
 
-LXD (`runs-on: ubuntu-latest`) is for now likely the easiest way to get `snapcraft` to build snaps. This is an alternative to using `multipass` (GitHub VMs give the error `launch failed: CPU does not support KVM extensions.` when trying to use `multipass`).
+LXD (`runs-on: ubuntu-18.04`) is for now likely the easiest way to get `snapcraft` to build snaps. This is an alternative to using `multipass` (GitHub VMs give the error `launch failed: CPU does not support KVM extensions.` when trying to use `multipass`).
 
 ```yml
 - name: Install Snapcraft with LXD
