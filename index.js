@@ -33,7 +33,7 @@ const getPlatform = () => {
  */
 const runLinuxInstaller = () => {
 	const useLxd = process.env.INPUT_USE_LXD === "true";
-	run("sudo snap install snapcraft --classic");
+	run(`sudo snap install snapcraft --classic --channel ${process.env.INPUT_CHANNEL}`);
 	if (useLxd) {
 		run("sudo snap install lxd");
 		run(`sudo usermod --append --groups lxd ${process.env.USER}`);

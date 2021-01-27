@@ -3,6 +3,10 @@ author: Samuel Meuli
 description: GitHub Action for setting up Snapcraft
 
 inputs:
+  channel:
+    description: The channel to install Snapcraft from
+    required: true
+    default: stable
   snapcraft_token:
     description: Token for logging into Snapcraft
     required: true
