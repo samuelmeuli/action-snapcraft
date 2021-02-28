@@ -22,6 +22,10 @@ jobs:
       - name: Snapcraft should be installed on macOS/Ubuntu
         if: startsWith(matrix.os, 'macos') || startsWith(matrix.os, 'ubuntu')
         run: snapcraft --version
+      - name: Snapcraft should track the `stable` channel on Linux
+        if: startsWith(matrix.os, 'ubuntu')
+        shell: bash
+        run: snap info snapcraft | grep -q 'tracking:\s\+latest/stable'
       - name: Snapcraft should not be installed on Windows
         if: startsWith(matrix.os, 'windows')
         shell: bash
@@ -45,6 +49,20 @@ jobs:
           snapcraft_token: ${{ secrets.snapcraft_token }}
       - name: User should be logged in
         run: snapcraft whoami
+
+  # Install with channel
+  install-channel:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+      - name: Run action
+        uses: ./
+        with:
+          channel: candidate
+      - name: Snapcraft should track the `candidate` channel on Linux
+        shell: bash
+        run: snap info snapcraft | grep -q 'tracking:\s\+latest/candidate'
 
   # Install with lxd
   lxd:
