@@ -36,7 +36,8 @@ on: push
 jobs:
   my-job:
     runs-on: ubuntu-18.04
-
+    env:
+      SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
@@ -61,7 +62,7 @@ snapcraft export-login --snaps SNAP_NAME --channels edge -
 
 NOTE: You will need to manually push a package to the Snap Store to get a valid SNAP_NAME first.
 
-Copy that token and add it as a secret to GitHub Actions. You can do this in your GitHub repository under Settings → Secrets. The secret must be called `snapcraft_token`.
+Copy that token and add it as a secret to GitHub Actions. You can do this in your GitHub repository under Settings → Secrets. The secret must be called `SNAPCRAFT_TOKEN`.
 
 Finally, add the following option to your workflow step:
 
@@ -69,7 +70,6 @@ Finally, add the following option to your workflow step:
 - name: Install Snapcraft
   uses: samuelmeuli/action-snapcraft@v1
   with:
-    snapcraft_token: ${{ secrets.snapcraft_token }}
     skip_install: true # optional, if already installed in an earlier step
 ```
 

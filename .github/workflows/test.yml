@@ -38,6 +38,8 @@ jobs:
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest]
+    env:
+      SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v1
@@ -45,8 +47,6 @@ jobs:
         run: "! snapcraft whoami"
       - name: Run action
         uses: ./
-        with:
-          snapcraft_token: ${{ secrets.snapcraft_token }}
       - name: User should be logged in
         run: snapcraft whoami
 
@@ -65,11 +65,11 @@ jobs:
         run: grep -q 'tracking:\s\+latest/candidate' <(snap info snapcraft)
 
   # Install with lxd
-  lxd:
+  lxd-install:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-18.04]
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v1
@@ -83,3 +83,17 @@ jobs:
           use_lxd: true
       - name: lxd should be installed
         run: "/snap/bin/lxd version"
+
+  # on ubuntu20.04 or later, lxd is already preinstalled
+  lxd-preinstalled:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+      - name: lxd should be installed
+        run: "/snap/bin/lxd version"
+      - name: Run action
+        uses: ./
