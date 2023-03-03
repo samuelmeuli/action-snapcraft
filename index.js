@@ -29,6 +29,9 @@ const getPlatform = () => {
  * Installs Snapcraft on Linux
  */
 const runLinuxInstaller = () => {
+	// TODO: Remove setting up lxd once the `use-lxd` input is removed
+	// as lxd is available on the latest ubuntu by default
+	// tag: deprecate_use_lxd
 	const useLxd = process.env.INPUT_USE_LXD === "true";
 	const lxdNotInstalled = process.env.ImageOS === "ubuntu18";
 	const setupLxd = useLxd && lxdNotInstalled;

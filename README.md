@@ -62,7 +62,18 @@ snapcraft export-login --snaps SNAP_NAME --channels edge -
 
 NOTE: You will need to manually push a package to the Snap Store to get a valid SNAP_NAME first.
 
-Copy that token and add it as a secret to GitHub Actions. You can do this in your GitHub repository under Settings → Secrets. The secret must be called `SNAPCRAFT_TOKEN`.
+Copy that token and add it as a secret to GitHub Actions. You can do this in your GitHub repository under Settings → Secrets. You can name it `SNAPCRAFT_TOKEN` for convenience.
+
+Set `SNAPCRAFT_STORE_CREDENTIALS` environment variable either in:
+
+- root yml file: to be available for all jobs
+- inside a job: to be available inside a specific job (recommended), or
+- inside a step: to be available only in a specific step
+
+```yml
+env:
+  SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
+```
 
 Finally, add the following option to your workflow step:
 
@@ -85,6 +96,8 @@ LXD (`runs-on: ubuntu-18.04`) is for now likely the easiest way to get `snapcraf
 - name: Build snap
   run: sg lxd -c 'snapcraft --use-lxd'
 ```
+
+On `ubuntu-20.04` or later, lxd is availabe by default, so `use_lxd` is redundant.
 
 ## Development
 

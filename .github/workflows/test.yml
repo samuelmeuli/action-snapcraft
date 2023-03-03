@@ -64,6 +64,9 @@ jobs:
         shell: bash
         run: grep -q 'tracking:\s\+latest/candidate' <(snap info snapcraft)
 
+  # TODO: Remove this job once the `use-lxd` input is removed
+  # as lxd is available on the latest ubuntu by default
+  # tag: deprecate_use_lxd
   # Install with lxd
   lxd-install:
     runs-on: ${{ matrix.os }}
