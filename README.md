@@ -23,7 +23,7 @@ To use this action, add the following step to your workflow:
 
 ```yml
 - name: Install Snapcraft
-  uses: samuelmeuli/action-snapcraft@v1
+  uses: samuelmeuli/action-snapcraft@v2
 ```
 
 A full example:
@@ -43,7 +43,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install Snapcraft
-        uses: samuelmeuli/action-snapcraft@v1
+        uses: samuelmeuli/action-snapcraft@v2
 
       # You can now run Snapcraft shell commands
       - name: Use Snapcraft
@@ -79,7 +79,7 @@ Finally, add the following option to your workflow step:
 
 ```yml
 - name: Install Snapcraft
-  uses: samuelmeuli/action-snapcraft@v1
+  uses: samuelmeuli/action-snapcraft@v2
   with:
     skip_install: true # optional, if already installed in an earlier step
 ```
@@ -90,7 +90,7 @@ Using `runs-on: ubuntu-20.04` or later, LXD is availabe by default. If using `ru
 
 ```yml
 - name: Install Snapcraft with LXD
-  uses: samuelmeuli/action-snapcraft@v1
+  uses: samuelmeuli/action-snapcraft@v2
   with:
     use_lxd: ${{ matrix.os == "ubuntu-18.04" }}
 - name: Build snap
