@@ -35,11 +35,12 @@ on: push
 
 jobs:
   my-job:
-    runs-on: ubuntu-18.04
-
+    runs-on: ubuntu-latest
+    env:
+      SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install Snapcraft
         uses: samuelmeuli/action-snapcraft@v1
@@ -61,7 +62,18 @@ snapcraft export-login --snaps SNAP_NAME --channels edge -
 
 NOTE: You will need to manually push a package to the Snap Store to get a valid SNAP_NAME first.
 
-Copy that token and add it as a secret to GitHub Actions. You can do this in your GitHub repository under Settings → Secrets. The secret must be called `snapcraft_token`.
+Copy that token and add it as a secret to GitHub Actions. You can do this in your GitHub repository under Settings → Secrets. You can name it `SNAPCRAFT_TOKEN` for convenience.
+
+Set `SNAPCRAFT_STORE_CREDENTIALS` environment variable either in:
+
+- root yml file: to be available for all jobs
+- inside a job: to be available inside a specific job (recommended), or
+- inside a step: to be available only in a specific step
+
+```yml
+env:
+  SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
+```
 
 Finally, add the following option to your workflow step:
 
@@ -69,19 +81,18 @@ Finally, add the following option to your workflow step:
 - name: Install Snapcraft
   uses: samuelmeuli/action-snapcraft@v1
   with:
-    snapcraft_token: ${{ secrets.snapcraft_token }}
     skip_install: true # optional, if already installed in an earlier step
 ```
 
 ### Build using LXD
 
-LXD (`runs-on: ubuntu-18.04`) is for now likely the easiest way to get `snapcraft` to build snaps. This is an alternative to using `multipass` (GitHub VMs give the error `launch failed: CPU does not support KVM extensions.` when trying to use `multipass`).
+Using `runs-on: ubuntu-20.04` or later, LXD is availabe by default. If using `runs-on: ubuntu-18.04`, LXD can be installed as shown below. This is an alternative to using `multipass` (GitHub VMs give the error `launch failed: CPU does not support KVM extensions.` when trying to use `multipass`).
 
 ```yml
 - name: Install Snapcraft with LXD
   uses: samuelmeuli/action-snapcraft@v1
   with:
-    use_lxd: true
+    use_lxd: ${{ matrix.os == "ubuntu-18.04" }}
 - name: Build snap
   run: sg lxd -c 'snapcraft --use-lxd'
 ```

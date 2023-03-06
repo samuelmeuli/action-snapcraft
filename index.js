@@ -1,7 +1,4 @@
 const { execSync } = require("child_process");
-const { writeFileSync, unlinkSync } = require("fs");
-
-const LOGIN_FILE_PATH = "./snap-token.txt";
 
 /**
  * Logs to the console
@@ -32,15 +29,21 @@ const getPlatform = () => {
  * Installs Snapcraft on Linux
  */
 const runLinuxInstaller = () => {
+	// TODO: Remove setting up lxd once the `use-lxd` input is removed
+	// as lxd is available on the latest ubuntu by default
+	// tag: deprecate_use_lxd
 	const useLxd = process.env.INPUT_USE_LXD === "true";
+	const lxdNotInstalled = process.env.ImageOS === "ubuntu18";
+	const setupLxd = useLxd && lxdNotInstalled;
+
 	run(`sudo snap install snapcraft --classic --channel ${process.env.INPUT_CHANNEL}`);
-	if (useLxd) {
+	if (setupLxd) {
 		run("sudo snap install lxd");
 		run(`sudo usermod --append --groups lxd ${process.env.USER}`);
 	}
 	run(`echo /snap/bin >> ${process.env.GITHUB_PATH}`); // Add `/snap/bin` to PATH for subsequent actions
 	run("sudo chown root:root /"); // Fix root ownership
-	if (useLxd) {
+	if (setupLxd) {
 		run("sudo /snap/bin/lxd.migrate -yes");
 		run("sudo /snap/bin/lxd waitready");
 		run("sudo /snap/bin/lxd init --auto");
@@ -80,16 +83,6 @@ const runAction = () => {
 	const snapcraftPath =
 		platform === "linux" ? "/snap/bin/snapcraft" : run("which snapcraft", false).trim();
 	log(`Snapcraft is installed at ${snapcraftPath}`);
-
-	// Log in
-	if (process.env.INPUT_SNAPCRAFT_TOKEN) {
-		log("Logging in to Snapcraft…");
-		writeFileSync(LOGIN_FILE_PATH, process.env.INPUT_SNAPCRAFT_TOKEN);
-		run(`${snapcraftPath} login --with ${LOGIN_FILE_PATH}`);
-		unlinkSync(LOGIN_FILE_PATH);
-	} else {
-		log(`No "snapcraft_token" input variable provided. Skipping login`);
-	}
 };
 
 runAction();
