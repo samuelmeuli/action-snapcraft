@@ -64,39 +64,24 @@ jobs:
         shell: bash
         run: grep -q 'tracking:\s\+latest/candidate' <(snap info snapcraft)
 
-  # TODO: Remove this job once the `use-lxd` input is removed
-  # as lxd is available on the latest ubuntu by default
-  # tag: deprecate_use_lxd
   # Install with lxd
-  lxd-install:
+  lxd:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-18.04]
+        os: [ubuntu-latest, ubuntu-18.04]
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v1
       - name: Run action
         uses: ./
-      - name: lxd should not be available
+      - if: matrix.os == "ubuntu-18.04"
+        name: lxd should not be available
         run: "! /snap/bin/lxd waitready"
-      - name: Run action requesting lxd
+      - if: matrix.os == "ubuntu-18.04"
+        name: Run action requesting lxd
         uses: ./
         with:
           use_lxd: true
       - name: lxd should be installed
         run: "/snap/bin/lxd version"
-
-  # on ubuntu20.04 or later, lxd is already preinstalled
-  lxd-preinstalled:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-    steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v1
-      - name: lxd should be installed
-        run: "/snap/bin/lxd version"
-      - name: Run action
-        uses: ./
