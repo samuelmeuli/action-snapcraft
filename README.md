@@ -92,7 +92,7 @@ Using `runs-on: ubuntu-20.04` or later, LXD is availabe by default. If using `ru
 - name: Install Snapcraft with LXD
   uses: samuelmeuli/action-snapcraft@v2
   with:
-    use_lxd: ${{ matrix.os == "ubuntu-18.04" }}
+    use_lxd: ${{ matrix.os == 'ubuntu-18.04' }}
 - name: Build snap
   run: sg lxd -c 'snapcraft --use-lxd'
 ```
