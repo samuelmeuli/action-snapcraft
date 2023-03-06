@@ -92,7 +92,7 @@ LXD (`runs-on: ubuntu-18.04`) is for now likely the easiest way to get `snapcraf
 - name: Install Snapcraft with LXD
   uses: samuelmeuli/action-snapcraft@v1
   with:
-    use_lxd: true
+    use_lxd: ${{ matrix.os == "ubuntu-18.04" }}
 - name: Build snap
   run: sg lxd -c 'snapcraft --use-lxd'
 ```
