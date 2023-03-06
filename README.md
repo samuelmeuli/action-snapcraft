@@ -86,7 +86,7 @@ Finally, add the following option to your workflow step:
 
 ### Build using LXD
 
-LXD (`runs-on: ubuntu-18.04`) is for now likely the easiest way to get `snapcraft` to build snaps. This is an alternative to using `multipass` (GitHub VMs give the error `launch failed: CPU does not support KVM extensions.` when trying to use `multipass`).
+Using `runs-on: ubuntu-20.04` or later, LXD is availabe by default. If using `runs-on: ubuntu-18.04`, LXD can be installed as shown below. This is an alternative to using `multipass` (GitHub VMs give the error `launch failed: CPU does not support KVM extensions.` when trying to use `multipass`).
 
 ```yml
 - name: Install Snapcraft with LXD
@@ -96,8 +96,6 @@ LXD (`runs-on: ubuntu-18.04`) is for now likely the easiest way to get `snapcraf
 - name: Build snap
   run: sg lxd -c 'snapcraft --use-lxd'
 ```
-
-On `ubuntu-20.04` or later, lxd is availabe by default, so `use_lxd` is redundant.
 
 ## Development
 
