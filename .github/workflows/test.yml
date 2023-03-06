@@ -26,7 +26,8 @@ jobs:
         if: startsWith(matrix.os, 'ubuntu')
         shell: bash
         run: |
-          snap info snapcraft | grep -Eq 'tracking:\s+latest/stable'
+          snap info snapcraft
+          grep -Eq 'tracking:\s+latest/stable' <(snap info snapcraft)
       - name: Snapcraft should not be installed on Windows
         if: startsWith(matrix.os, 'windows')
         shell: bash
@@ -64,7 +65,8 @@ jobs:
       - name: Snapcraft should track the `candidate` channel on Linux
         shell: bash
         run: |
-          snap info snapcraft | grep -Eq 'tracking:\s+latest/candidate'
+          snap info snapcraft
+          grep -Eq 'tracking:\s+latest/candidate' <(snap info snapcraft)
 
   # Install with lxd
   lxd:
