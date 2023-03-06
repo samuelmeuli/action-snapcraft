@@ -35,12 +35,12 @@ on: push
 
 jobs:
   my-job:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     env:
       SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install Snapcraft
         uses: samuelmeuli/action-snapcraft@v1
