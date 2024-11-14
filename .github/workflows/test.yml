@@ -14,6 +14,9 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v4
+      - if: startsWith(matrix.os, 'ubuntu')
+        name: lxd should be installed
+        run: "/snap/bin/lxd version"
       - name: Snapcraft should not be installed
         shell: bash
         run: "! snapcraft --version"
@@ -67,22 +70,3 @@ jobs:
         run: |
           snap info snapcraft
           grep -Eq 'tracking:\s+latest/candidate' <(snap info snapcraft)
-
-  # Install with lxd
-  lxd:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, ubuntu-18.04]
-    steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v4
-      - if: matrix.os == 'ubuntu-18.04'
-        name: lxd should not be available
-        run: "! /snap/bin/lxd waitready"
-      - name: Run action
-        uses: ./
-        with:
-          use_lxd: ${{ matrix.os == 'ubuntu-18.04' }}
-      - name: lxd should be installed
-        run: "/snap/bin/lxd version"

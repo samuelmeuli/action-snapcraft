@@ -11,10 +11,10 @@ inputs:
     description: Skip installation (login only)
     required: false
   use_lxd:
-    description: Whether to install and configure lxd (ubuntu18.04 or lower only)
+    description: Whether to install and configure lxd
     required: false
     # tag: deprecate_use_lxd
-    deprecationMessage: On ubuntu20.04 or later, it's enabled by default
+    deprecationMessage: automatic on ubuntu-20.04 or later
 
 runs:
   using: node20
